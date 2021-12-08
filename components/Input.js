@@ -1,55 +1,51 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { 
-    StyleSheet, 
-    View,
-    TextInput,  
-    Pressable,
-    Text, 
-} from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import { ListContext } from '../contexts/List'
 
 const Input = () => {
     const { list, setList } = useContext(ListContext)
-    const [text, setText] = useState([])  
-    const [imageUrl, setImageUrl] = useState([])
+    const [textPost, setTextPost] = useState("")  
+    const [imageUrl, setImageUrl] = useState("")
   
     useEffect(() => {
-        fetch("https://coffee.alexflipnote.dev/random.json", {
-            mode: 'cors'
-        })
+        fetch("https://coffee.alexflipnote.dev/random.json")
         .then(response => response.json())
-        .then(data => setImageUrl(data.file))
+        .then(data=> setImageUrl(data.file))
         .catch(err => alert(err))       
-    }, [])
+    }, [list])
 
-    // useEffect(() => {
-    //     fetch("https://coffee.alexflipnote.dev/random.json")
-    //     .then(response => response.json())
-    //     .then(data=> setImageUrl(data.file))
-    //     .catch(err => alert(err))       
-    // }, [list])
-
-
-    const addPost = () => {
-        setList([{text, imageUrl}, ...list])
-        setText([])
+    const handleSubmit = () => {
+        if (textPost === "") {
+            setList([{
+                text: "Sans titre", 
+                imageUrl: imageUrl
+            }, ...list])
+            setTextPost("")  
+        } else {
+            setList([{
+                text: textPost, 
+                imageUrl: imageUrl
+            }, ...list])
+            setTextPost("")   
+        }       
     }
   
     return (
         <View style={styles.containerInput}>
-            <View style={styles.input}>
-                <TextInput
-                     value={text}
-                     onChangeText={(text) => setText(text)}
-                     placeholder= "Quoi de neuf ?"
-                />
-            </View>
-                <Pressable 
-                    style={styles.button} 
-                    onPress={() => addPost()}
-                >
-                    <Text style={styles.buttonText}>Publier</Text>
-                </Pressable>  
+            <TextInput
+                value={textPost}
+                onChangeText={(text) => setTextPost(text)}
+                placeholder= "Quoi de neuf ?"
+                mode="outlined"
+                style={styles.input}
+            />
+            <TouchableOpacity 
+                onPress={() => handleSubmit()}
+                style={styles.button} 
+            >
+                <Text style={styles.buttonText}>Publier</Text>
+            </TouchableOpacity>  
         </View>
     );
 };
@@ -57,19 +53,17 @@ const Input = () => {
 const styles = StyleSheet.create({
     containerInput: {
         alignItems: 'flex-end',
+        marginBottom: 10,
     },
     input: {
         marginBottom: 10,
-        padding: 10,
-        backgroundColor: '#E6E5E4',
-        borderRadius: 5,
         width: 300,
     },
     button: {
-        width: 90,
+        width: 100,
         backgroundColor: "#FFD933",
-        borderRadius: 5,
-        padding: 5,
+        borderRadius: 7,
+        padding: 10,
     },
     buttonText: {
         color: "white",
