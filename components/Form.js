@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { ListContext } from '../contexts/List'
 
-const Input = () => {
+const Form = () => {
     const { list, setList } = useContext(ListContext)
     const [textPost, setTextPost] = useState("")  
     const [imageUrl, setImageUrl] = useState("")
@@ -32,7 +32,7 @@ const Input = () => {
     }
   
     return (
-        <View style={styles.containerInput}>
+        <View style={styles.form}>
             <TextInput
                 value={textPost}
                 onChangeText={(text) => setTextPost(text)}
@@ -51,7 +51,7 @@ const Input = () => {
 };
 
 const styles = StyleSheet.create({
-    containerInput: {
+    form: {
         alignItems: 'flex-end',
         marginBottom: 10,
     },
@@ -72,4 +72,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Input;
+export default Form;

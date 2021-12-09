@@ -2,14 +2,14 @@ import React from 'react';
 import { View, StyleSheet, } from 'react-native';
 import { ListContextProvider } from './contexts/List'
 import List from './components/List'
-import Input from './components/Input'
+import Form from './components/Form'
 
 
 const App = () => {
   return (
     <ListContextProvider>
       <View style={styles.container}>
-        <Input/>
+        <Form/>
         <List/>
       </View>
     </ListContextProvider>
